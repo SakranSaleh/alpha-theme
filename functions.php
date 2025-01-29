@@ -1,27 +1,42 @@
 <?php
 
-function lwhh_alpha_bootsrepping(){
-    load_theme_textdomain( "LWHH-alpha" );
-    add_theme_support( "post-thumbnails");
-    add_theme_support( "title-tag" );
-    register_nav_menu( "topmenu", __("Top Menus", "LWHH-alpha" ) );
-    register_nav_menu( "footermenu", __("Footer Menu", "LWHH-alpha" ) );
+if (site_url() == "http://lwhh-1.test") {
+    define("VERSION", time());
+} else {
+    define("VERSION", wp_get_theme()->get("Version"));
 }
 
-add_action( "after_setup_theme", "lwhh_alpha_bootsrepping" );
 
-function lwhh_alpha_scripts(){
-    wp_enqueue_style( 'lwhh_alpha_style', get_stylesheet_uri());
+function lwhh_alpha_bootsrepping()
+{
+    load_theme_textdomain("LWHH-alpha");
+    add_theme_support("post-thumbnails");
+    add_theme_support("title-tag");
+    register_nav_menu("topmenu", __("Top Menus", "LWHH-alpha"));
+    register_nav_menu("footermenu", __("Footer Menu", "LWHH-alpha"));
+}
+
+add_action("after_setup_theme", "lwhh_alpha_bootsrepping");
+
+function lwhh_alpha_scripts()
+{
+    wp_enqueue_style('lwhh_alpha_style', get_stylesheet_uri(), null, VERSION);
     wp_enqueue_style('bootstrap', "//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css");
+    wp_enqueue_style('featherlight-css', "//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.css");
+
+
+    wp_enqueue_script("featherlight-js", "//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.js", array("jquery"), "0.0.1", true);
+    wp_enqueue_script("lwhh-alpha-main-js", get_theme_file_uri("/assets/js/main.js"), array("jQuery", "featherlight-js"), VERSION, true);
 }
 
-add_action( "wp_enqueue_scripts", "lwhh_alpha_scripts" );
+add_action("wp_enqueue_scripts", "lwhh_alpha_scripts");
 
 
-function lwhh_alphp_sidebar(){
-    register_sidebar( 
+function lwhh_alphp_sidebar()
+{
+    register_sidebar(
         array(
-            'name'           =>  __( "Single Post Sidebar", "LWHH-alpha" ),
+            'name'           =>  __("Single Post Sidebar", "LWHH-alpha"),
             'id'             => "sidebar-1",
             'description'    => __("Right Sidebar", "LWHH-alpha"),
             'class'          => '',
@@ -32,59 +47,62 @@ function lwhh_alphp_sidebar(){
             'before_sidebar' => '',
             'after_sidebar'  => '',
         )
-        );
+    );
 
-        register_sidebar( 
-            array(
-                'name'           =>  __( "Footer Left", "LWHH-alpha" ),
-                'id'             => "footer-left",
-                'description'    => __("Wedgetezed area in footer left side", "LWHH-alpha"),
-                'class'          => '',
-                'before_widget'  => "",
-                'after_widget'   => "",
-                'before_title'   => "",
-                'after_title'    => "",
-                'before_sidebar' => '',
-                'after_sidebar'  => '',
-            )
-            );
+    register_sidebar(
+        array(
+            'name'           =>  __("Footer Left", "LWHH-alpha"),
+            'id'             => "footer-left",
+            'description'    => __("Wedgetezed area in footer left side", "LWHH-alpha"),
+            'class'          => '',
+            'before_widget'  => "",
+            'after_widget'   => "",
+            'before_title'   => "",
+            'after_title'    => "",
+            'before_sidebar' => '',
+            'after_sidebar'  => '',
+        )
+    );
 
-            register_sidebar( 
-                array(
-                    'name'           =>  __( "Footer Right", "LWHH-alpha" ),
-                    'id'             => "footer-right",
-                    'description'    => __("Wedgetezed area in footer right side", "LWHH-alpha"),
-                    'class'          => '',
-                    'before_widget'  => "",
-                    'after_widget'   => "",
-                    'before_title'   => "",
-                    'after_title'    => "",
-                    'before_sidebar' => '',
-                    'after_sidebar'  => '',
-                )
-                );
+    register_sidebar(
+        array(
+            'name'           =>  __("Footer Right", "LWHH-alpha"),
+            'id'             => "footer-right",
+            'description'    => __("Wedgetezed area in footer right side", "LWHH-alpha"),
+            'class'          => '',
+            'before_widget'  => "",
+            'after_widget'   => "",
+            'before_title'   => "",
+            'after_title'    => "",
+            'before_sidebar' => '',
+            'after_sidebar'  => '',
+        )
+    );
 }
 
-add_action( "widgets_init", "lwhh_alphp_sidebar" );
+add_action("widgets_init", "lwhh_alphp_sidebar");
 
 
-function lwhh_alphp_the_excerpt($excerpt){
-    if(!post_password_required( )){
+function lwhh_alphp_the_excerpt($excerpt)
+{
+    if (!post_password_required()) {
         return $excerpt;
-    }else{
-        echo get_the_password_form( );
+    } else {
+        echo get_the_password_form();
     }
 }
-add_filter( "the_excerpt", "lwhh_alphp_the_excerpt" );
+add_filter("the_excerpt", "lwhh_alphp_the_excerpt");
 
-function lwhh_alphp_protected_title_change(){
+function lwhh_alphp_protected_title_change()
+{
     return "%s";
 }
 
-add_filter( "protected_title_format", "lwhh_alphp_protected_title_change" );
+add_filter("protected_title_format", "lwhh_alphp_protected_title_change");
 
-function lwhh_alphp_add_menu_item_class($class, $item){
+function lwhh_alphp_add_menu_item_class($class, $item)
+{
     $class[] = "list-inline-item";
     return $class;
 }
-add_filter( "nav_menu_css_class", "lwhh_alphp_add_menu_item_class", 10, 2);
+add_filter("nav_menu_css_class", "lwhh_alphp_add_menu_item_class", 10, 2);

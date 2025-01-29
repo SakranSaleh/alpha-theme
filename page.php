@@ -4,7 +4,7 @@
     <?php get_template_part("hero") ?>
     <div class="container">
         <div class="row">
-            <div class="col md-8">
+            <div class="col-md-10 offset-md-1">
                 <div class="posts">
                     <?php
                     while (have_posts()):
@@ -17,12 +17,8 @@
 
                                     <div class="col-md-12">
                                         <div class="">
-                                            <h2 class="post-title"><?php the_title(); ?></h2>
-                                            <p>
-                                                <strong><?php the_author() ?> </strong><br />
-                                                <?php echo get_the_date(); ?>
-                                            </p>
-                                            <?php echo get_the_tag_list('<ul class="list-unstyled"><li>', '</li><li>', '</li></ul>'); ?>
+                                            <h2 class="post-title text-center"><?php the_title(); ?></h2>
+
                                         </div>
                                         <p>
                                             <?php
@@ -56,29 +52,9 @@
                     endwhile;
 
                     ?>
-                    <?php if (comments_open()) : ?>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-
-                                    <?php comments_template();
-
-                                    ?>
-                                </div>
-
-                            </div>
-                        </div>
-                    <?php endif; ?>
                 </div>
             </div>
-            <div class="col-md-4">
-                <?php
-                if (is_active_sidebar("sidebar-1")) {
-                    dynamic_sidebar("sidebar-1");
-                }
 
-                ?>
-            </div>
         </div>
     </div>
     <?php get_footer(); ?>
