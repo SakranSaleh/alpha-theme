@@ -12,6 +12,21 @@ function lwhh_alpha_bootsrepping()
     load_theme_textdomain("LWHH-alpha");
     add_theme_support("post-thumbnails");
     add_theme_support("title-tag");
+    $LWHH_alpha_custom_header_details = [
+        "header_text" => true,
+        "default_text_color" => "#222",
+        "width" => "1200",
+        "height" => "600",
+        "flex-width" => true,
+        "flex-height" => true
+    ];
+    add_theme_support("custom-header", $LWHH_alpha_custom_header_details);
+    $custom_logo_dafaults = [
+        "width" => "100",
+        "height" => "100"
+    ];
+    add_theme_support("custom-logo", $custom_logo_dafaults);
+    add_theme_support("custom-background");
     register_nav_menu("topmenu", __("Top Menus", "LWHH-alpha"));
     register_nav_menu("footermenu", __("Footer Menu", "LWHH-alpha"));
 }
@@ -106,3 +121,48 @@ function lwhh_alphp_add_menu_item_class($class, $item)
     return $class;
 }
 add_filter("nav_menu_css_class", "lwhh_alphp_add_menu_item_class", 10, 2);
+
+
+
+function lwhh_alphp_about_page_template_banner()
+{
+    if (is_page()) {
+        $alpga_feat_image = get_the_post_thumbnail_url(null, "large");
+
+?>
+        <style>
+            /* Hello style */
+            .page-header {
+                background-image: url("<?php echo $alpga_feat_image ?>");
+
+            }
+        </style>
+
+        <?php
+    }
+
+    if (is_front_page()) {
+        if (current_theme_supports("custom-header")) {
+        ?>
+            <style>
+                .header {
+                    background-image: url("<?php echo header_image(); ?>");
+                    background-size: cover;
+                }
+
+                .header h1 a,
+                .header .tagline {
+                    color: #<?php echo get_header_textcolor(); ?>;
+
+                    <?php if (!display_header_text()) {
+                        echo "display: none;";
+                    }
+
+                    ?>
+                }
+            </style>
+<?php
+        }
+    }
+}
+add_action("wp_head", "lwhh_alphp_about_page_template_banner");

@@ -7,7 +7,7 @@
 <?php get_header() ?>
 
 <body <?php body_class(); ?>>
-    <?php get_template_part("hero-page") ?>
+    <?php get_template_part("/template-parts/about-us/hero-page") ?>
     <div class="container">
         <div class="row">
             <div class="col-md-10 offset-md-1">

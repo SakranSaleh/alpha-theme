@@ -83,3 +83,11 @@ list-unstyled li a {
     color: #222;
     text-decoration: none;
 }
+
+.header-logo {
+    margin-top: 50px;
+}
+
+.header-logo img {
+    border-radius: 50%;
+}
